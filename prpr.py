@@ -13,31 +13,20 @@ import torchvision.transforms as transforms
 
 class_names = ['paper', 'glass', 'trash', 'metal', 'plastic', 'cardboard']
 
-# 定义类别数量
-num_classes = len(class_names)  # 确保这里是您的类别数量
 
-# 创建 DenseNet169 模型实例
-model = models.densenet169(pretrained=False)  # 使用 pretrained=False，因为我们将加载自己的权重
+num_classes = len(class_names) 
+
+
+model = models.densenet169(pretrained=False) 
 num_ftrs = model.classifier.in_features
 
-# 修改分类器以匹配您的类别数量
 model.classifier = nn.Linear(num_ftrs, num_classes)
 
-# 加载保存的权重
+
 model.load_state_dict(torch.load('I:\\model.pth'))
 
-
-
-# 将模型设置为评估模式
 model.eval()
 
-
-
-
-
-
-
-# 预处理函数
 def preprocess_image(image_path):
     transform = transforms.Compose([
         transforms.Resize((384, 512)),
@@ -50,24 +39,22 @@ def preprocess_image(image_path):
     image = transform(image).unsqueeze(0)
     return image
 
-# 预测函数
 def classify_image(image_path):
     image = preprocess_image(image_path)
     with torch.no_grad():
         outputs = model(image)
         _, predicted = torch.max(outputs, 1)
-        return predicted.item()  # 需要将索引映射到类别名称
+        return predicted.item()  
 
-# 创建 GUI
+
 root = tk.Tk()
 root.title("PR_Project")
-root.geometry("800x800")  # 设置窗口大小
+root.geometry("800x800")  
 
-# 创建 Style 对象
 style = ttk.Style()
 style.configure("TButton", font=("Helvetica", 16, "bold"), borderwidth='4')
 
-# 创建 Canvas 组件来显示图片
+
 canvas = tk.Canvas(root, width=384, height=512)
 canvas.pack(side=tk.TOP, pady=20)
 
@@ -78,10 +65,10 @@ def on_open():
     if file_path:
         image_path = file_path
         image = Image.open(file_path)
-        image.thumbnail((384, 512))  # 调整图像大小
+        image.thumbnail((384, 512))  
         photo_image = ImageTk.PhotoImage(image)
-        canvas.create_image(192, 256, image=photo_image)  # 将图像放置在 Canvas 的中心
-# 类别索引到类别名称的映射
+        canvas.create_image(192, 256, image=photo_image) 
+
 class_index_to_name = {
     0: 'cardboard',
     1: 'glass',
@@ -91,14 +78,14 @@ class_index_to_name = {
     5: 'trash'
 }
 
-# 预测函数
+
 def classify_image(image_path):
     image = preprocess_image(image_path)
     with torch.no_grad():
         outputs = model(image)
         _, predicted = torch.max(outputs, 1)
         predicted_class_index = predicted.item()
-        return class_index_to_name[predicted_class_index]  # 将索引映射到类别名称
+        return class_index_to_name[predicted_class_index] 
 
 def on_classify():
     global image_path, label
@@ -109,13 +96,13 @@ def on_classify():
 def on_clear():
     global image_path, canvas, label
     image_path = None
-    canvas.delete("all")  # 清除 Canvas
+    canvas.delete("all") 
     label.config(text="Choose Your Image")
-# 创建一个 frame 用于放置按钮
+
 button_frame = tk.Frame(root)
 button_frame.pack(side=tk.TOP, fill=tk.X)
 
-# UI 组件
+
 button_frame = tk.Frame(root)
 button_frame.pack(side=tk.TOP, pady=10)
 
