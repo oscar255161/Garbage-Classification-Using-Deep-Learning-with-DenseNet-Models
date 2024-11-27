@@ -56,7 +56,6 @@ The final trained model is integrated into a GUI for practical use, allowing use
 - **Show Category**: Display the classification result.  
 - **Clean Current Image**: Reset the interface for a new task.
 
-![UI Screenshot](images/ui_example.png)
 
 ---
 
