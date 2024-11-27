@@ -1,4 +1,4 @@
-#Pattern Recognition Project: Garbage Classification Using Deep Learning with DenseNet Models
+# Pattern Recognition Project: Garbage Classification Using Deep Learning with DenseNet Models
 
 ## Introduction  
 Garbage classification has become a global environmental challenge. From simple waste disposal methods to today’s recycling and waste reduction strategies, significant progress has been made. However, with increasing diversity in human activities and consumption patterns, the types and quantities of waste have also risen, ranging from household garbage to industrial waste, making efficient classification and disposal more complex and challenging.
